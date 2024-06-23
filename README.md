@@ -26,7 +26,7 @@ construction, data augmentations at multiple levels (e.g., table-level, task-lev
 Dataset examples are shown in the following figure and more examples are shown in the Appendix A in the original paper.
 
 <div align=center>
-<img src="./readme_images/dataset_example.jpg" width = "800" height = "360" align=center />
+<img src="./readme_images/dataset_example_4.jpg" width = "800" height = "360" align=center />
 </div>
 
 ## 3. Model Weights
