@@ -1,0 +1,1 @@
+```pre_trained_mm_projector``` of Table LLaVA 7b can be downloaded from the [HuggingFace Repository](https://huggingface.co/SpursgoZmy/table-llava-v1.5-pretrained_mm_projector/tree/main/llava-v1.5-7b-with-table-pretrain)
