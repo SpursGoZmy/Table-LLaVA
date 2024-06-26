@@ -17,7 +17,7 @@ We constructed MMTab based on 14 publicly available table datasets of 8 domains.
 output response>```. The resulting dataset contains three parts and can be downloaded from the [Hugging Face Dataset](https://huggingface.co/datasets/SpursgoZmy/MMTab). During the dataset
 construction, data augmentations at multiple levels (e.g., table-level, task-level) were adopted to further improve the data diversity.
 
-| Dataset Split | #Table Images | #Sample |
+| Dataset Split | #Table Images | #Samples |
 | :---: | :---: | :---: |
 | **MMTab-pre** | 97K | 150K table recognition samples for pre-training |
 | **MMTab-instruct** | 82K | 232K samples of 14 table-based tasks for instruction-tuning |
@@ -30,8 +30,34 @@ Dataset examples are shown in the following figure and more examples are shown i
 </div>
 
 ## 3. Model Weights
+Table LLaVA follows the LLaVA v1.5 architecture, with [CLIP-ViT-L-336px](https://huggingface.co/openai/clip-vit-large-patch14-336) as the visual encoder (336*336 image resolution), [Vicuna-v1.5-7B](https://huggingface.co/lmsys/vicuna-7b-v1.5) or [Vicuna-v1.5-13B](https://huggingface.co/lmsys/vicuna-13b-v1.5) as the base LLM and a two-layer MLP as the vision-language connector. We use the code base of [LLaVA-v1.5](https://github.com/haotian-liu/LLaVA/tree/main) for model training and inference. Thus, Table LLaVA can be used in the same way as the normal LLaVA v1.5 model. The saved model checkpoints can be downloaded from the following Hugging Face Repository:
+
+| Version | Size | Schedule | Base LLM | Vision Encoder | Projection layer | Checkpoints |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Table LLaVA | 7B | full_finetune-1_epoch | Vicuna-v1.5-7B | CLIP-ViT-L-336px | MLP-2x | [SpursgoZmy/table-llava-v1.5-7b](https://huggingface.co/SpursgoZmy/table-llava-v1.5-7b) |  
+| Table LLaVA | 13B | full_finetune-1_epoch | Vicuna-v1.5-13B | CLIP-ViT-L-336px | MLP-2x | [SpursgoZmy/table-llava-v1.5-13b](https://huggingface.co/SpursgoZmy/table-llava-v1.5-13b) |  
+| pretrained_mm_projector of Table LLaVA 7B | 5M | full_finetune-1_epoch | Vicuna-v1.5-7B | CLIP-ViT-L-336px | MLP-2x | [SpursgoZmy/table-llava-v1.5-pretrained_mm_projector](https://huggingface.co/SpursgoZmy/table-llava-v1.5-pretrained_mm_projector/tree/main/llava-v1.5-7b-with-table-pretrain) |
+| pretrained_mm_projector of Table LLaVA 13B | 5M | full_finetune-1_epoch | Vicuna-v1.5-13B | CLIP-ViT-L-336px | MLP-2x | [SpursgoZmy/table-llava-v1.5-pretrained_mm_projector](https://huggingface.co/SpursgoZmy/table-llava-v1.5-pretrained_mm_projector/tree/main/llava-v1.5-13b-with-table-pretrain) |
 
 ## 4. Training
+### 4.1 Training Data and Hyperparameters
+Table LLaVA training consists of two stages: (1) Pre-training stage: the vision-language connector (a two-layer MLP) is trained to connect the frozen pretrained vision encoder (ViT) to the frozen LLM (Vicuna v1.5); (2) Instruction-tuning stage: the vision-language connector and the base LLM are trained to follow multimodal instructions.
+
+The training data of each stage is shown below:
+
+| Training Stage | Data Description | Data Size | Hugging Face Dataset |
+| :---: | :---: | :---: | :---: | 
+| Pre-training | 558K original LLaVA-1.5 pre-training data | 558K | [blip_laion_cc_sbu_558k.json](https://huggingface.co/datasets/liuhaotian/LLaVA-Pretrain) |
+|              | 150K table recognition data (MMTab-pre) | 150K | [MMTab-pre_pretrain_data_llava_format_150K.json](https://huggingface.co/datasets/SpursgoZmy/MMTab) |
+| Instruction Fine-tuning | 665K original LLaVA-1.5 fine-tuning data | 665K | [llava_v1_5_mix665k.json](https://huggingface.co/datasets/liuhaotian/LLaVA-Instruct-150K) |
+|              | 232K multimodal instruction tuning data of 14 tabular tasks (MMTab-instruct) | 232K | [MMTab-instruct_sft_data_llava_format_232K.json](https://huggingface.co/datasets/SpursgoZmy/MMTab) |
+
+The merged pre-training and instruction fine-tuning data in the LLaVA data format can be found in the [MMTab dataset](https://huggingface.co/datasets/SpursgoZmy/MMTab), 
+i.e., ```enhanced_llava_pretrain_data_708K.json``` and ```enhanced_llava_sft_data_898K.json```, which can be directly used to train Table LLaVA.
+
+The hyperparameters used in pretraining and finetuning are provided below. We use a similar set of hyperparameters as LLaVA v1.5 except that we increased the
+max sequence length from 2048 to 2560 to accommodate longer text sequences.
+
 
 ## 5. Inference
 
