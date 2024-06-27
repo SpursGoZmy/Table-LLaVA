@@ -99,7 +99,9 @@ LLaVA-Pretrain
 └── enhanced_llava_pretrain_data_708K.json
 ```
 
-5. Training script with DeepSpeed ZeRO-2: [`pretrain_table_llava.sh`](https://github.com/SpursGoZmy/Table-LLaVA/blob/main/scripts/v1_5/table_llava_scripts/pretrain_table_llava.sh).
+5. Training script with DeepSpeed ZeRO-2: [`pretrain_table_llava.sh`](https://github.com/SpursGoZmy/Table-LLaVA/blob/main/scripts/v1_5/table_llava_scripts/pretrain_table_llava.sh). If you cannot automaticly accees the base Vicuna v1.5 and ViT model through HuggingFace, you can download these models manually and set corresponding parameters to the local model path, such as ```mm_vision_tower``` in the ```config.json``` file.
+
+### 4.4 Fine-tuning
 
 
 ## 5. Inference
