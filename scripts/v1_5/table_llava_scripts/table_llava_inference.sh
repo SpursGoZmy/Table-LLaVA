@@ -31,6 +31,3 @@ output_file=./eval_results/answers/$SPLIT/$CKPT/merge.jsonl
 for IDX in $(seq 0 $((CHUNKS-1))); do
     cat ./eval_results/answers/$SPLIT/$CKPT/${CHUNKS}_${IDX}.jsonl >> "$output_file"
 done
-
-#python scripts/convert_vqav2_for_submission.py --split $SPLIT --ckpt $CKPT
-
