@@ -127,9 +127,10 @@ LLaVA-Finetune
 └── enhanced_llava_sft_data_898K.json
 ```
 
-5. Training script with DeepSpeed ZeRO-3: [`continue_sft_table_llava.sh`](https://github.com/SpursGoZmy/Table-LLaVA/blob/main/scripts/v1_5/table_llava_scripts/continue_sft_table_llava.sh). The trained table llava model will be saved at the specified ```output_dir```.
+5. Training script with DeepSpeed ZeRO-3: [`continue_sft_table_llava.sh`](https://github.com/SpursGoZmy/Table-LLaVA/blob/main/scripts/v1_5/table_llava_scripts/continue_sft_table_llava.sh). Set the ```pretrain_mm_mlp_adapter``` parameter to the path of your pre-trained vision-language projector, such as ```./pretrained_mm_projector/llava-v1.5-7b-with-table-pretrain/mm_projector.bin```. The trained table llava model will be saved at the specified ```output_dir```.
 
 ## 5. Inference
+
 
 ## 6. Evaluation
 
