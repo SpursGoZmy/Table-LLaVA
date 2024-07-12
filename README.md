@@ -75,16 +75,16 @@ i.e., ```enhanced_llava_pretrain_data_708K.json``` and ```enhanced_llava_sft_dat
 Table LLaVA was trained on 8 A800 GPUs with 80GB memory. We use a similar set of hyperparameters as LLaVA v1.5 except that we increased the
 max sequence length from 2048 to 2560 to accommodate longer text sequences. The hyperparameters used in pretraining and finetuning are provided below. 
 
-| Stage | Global Batch Size | Learning rate | Epochs | Max length | Weight decay | warmup ratio | Deepspeed Stage |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| Pre-training | 256 | 1e-3 | 1 | 2560 | 0 | 0.03 | ZeRO-2 |
-| Instruction Fine-tuning | 128 | 2e-5 | 1 | 2048 | 0 | 0.03 | ZeRO-3 |
+| Stage | Trained Weights | Global Batch Size | Learning rate | Epochs | Max length | Weight decay | warmup ratio | Deepspeed Stage |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Pre-training | vision-language connector | 256 | 1e-3 | 1 | 2560 | 0 | 0.03 | ZeRO-2 |
+| Instruction Fine-tuning | base LLM and vision-language connector | 128 | 2e-5 | 1 | 2048 | 0 | 0.03 | ZeRO-3 |
 
 ### 4.3 Pre-training
 
 1. Download the original images for LLaVA v1.5 pretraining, i.e., ```images.zip``` from [here](https://huggingface.co/datasets/liuhaotian/LLaVA-Pretrain/tree/main). Put it under ```./LLaVA-Pretrain/images``` and unzip it.
 2. Download ```MMTab-instruct_table_images_82K.zip``` and ```MMTab-pre_table_images_part_2_16K.zip``` from [MMTab dataset](https://huggingface.co/datasets/SpursgoZmy/MMTab/tree/main). Put them under ```./LLaVA-Pretrain/images``` and unzip them. Rename the ```IID_train_image``` dir to ```table_pretrain_part_1```.
-3. Download ```enhanced_llava_pretrain_data_708K.json``` from [MMTab dataset](https://huggingface.co/datasets/SpursgoZmy/MMTab/tree/main) to ```./LLaVA-Pretrain```
+3. Download ```enhanced_llava_pretrain_data_708K.json``` from [MMTab dataset](https://huggingface.co/datasets/SpursgoZmy/MMTab/tree/main) to ```./LLaVA-Pretrain```.
 4. The resulting data should be organized as follows:
 
 ```
@@ -99,10 +99,35 @@ LLaVA-Pretrain
 └── enhanced_llava_pretrain_data_708K.json
 ```
 
-5. Training script with DeepSpeed ZeRO-2: [`pretrain_table_llava.sh`](https://github.com/SpursGoZmy/Table-LLaVA/blob/main/scripts/v1_5/table_llava_scripts/pretrain_table_llava.sh). If you cannot automaticly accees the base Vicuna v1.5 and ViT model through HuggingFace, you can download these models manually and set corresponding parameters to the local model path, such as ```mm_vision_tower``` in the ```config.json``` file.
+5. Training script with DeepSpeed ZeRO-2: [`pretrain_table_llava.sh`](https://github.com/SpursGoZmy/Table-LLaVA/blob/main/scripts/v1_5/table_llava_scripts/pretrain_table_llava.sh). If you cannot automaticly download the base Vicuna v1.5 and ViT model through HuggingFace, you can download these models manually and set corresponding command-line parameters (```model_name_or_path``` and ```vision_tower```) to the local model paths. Once the pre-training is finished, the trained vision-language projector will be saved at the specified ```output_dir```.
 
 ### 4.4 Fine-tuning
 
+1. Create 5 new folders under ```./LLaVA-Finetune/images``` whose names are ```coco```, ```gqa```, ```ocr_vqa```, ```textvqa``` and ```vg```, respectively. Follow instructions from [here](https://github.com/haotian-liu/LLaVA?tab=readme-ov-file#visual-instruction-tuning) to download images from these 5 datasets for LLaVA v1.5 fine-tuning. Put the zip files in the corresponding folders and unzip them. 
+2. Download ```MMTab-instruct_table_images_82K.zip``` from [MMTab dataset](https://huggingface.co/datasets/SpursgoZmy/MMTab/tree/main). Put it under ```./LLaVA-Finetune/images/table_instructV``` and unzip it. Rename the resulting ```IID_train_image``` dir to ```images```.
+3. Download ```enhanced_llava_sft_data_898K.json``` from [MMTab dataset](https://huggingface.co/datasets/SpursgoZmy/MMTab/tree/main) to ```./LLaVA-Finetune```.
+4. The resulting data should be organized as follows:
+
+```
+LLaVA-Finetune
+├── images
+│   ├── coco
+|   |   └── train2017
+|   ├── gqa
+|   |   └── images
+|   ├── ocr_vqa
+|   |   └── images
+|   ├── textvqa
+|   |   └── train_images
+|   ├── vg
+|   |   ├── VG_100K
+|   |   └── VG_100K_2
+|   ├── table_instructV
+|   |   └── images
+└── enhanced_llava_sft_data_898K.json
+```
+
+5. Training script with DeepSpeed ZeRO-3: [`continue_sft_table_llava.sh`](https://github.com/SpursGoZmy/Table-LLaVA/blob/main/scripts/v1_5/table_llava_scripts/continue_sft_table_llava.sh). The trained table llava model will be saved at the specified ```output_dir```.
 
 ## 5. Inference
 
