@@ -139,7 +139,7 @@ LLaVA-Finetune
 ## TODOs
 - [x] Upload the MMTab dataset to Hugging Face.
 - [x] Upload the Table LLaVA 7B and 13B model weights to Hugging Face.
-- [ ] Upload the code for model training.
+- [x] Upload the code for model training.
 - [ ] Upload the code for model inference.
 - [ ] Upload the code for evaluation.
 
