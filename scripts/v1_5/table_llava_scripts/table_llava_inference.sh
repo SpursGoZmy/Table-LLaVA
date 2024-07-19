@@ -11,8 +11,8 @@ SPLIT="MMTab_eval"
 for IDX in $(seq 0 $((CHUNKS-1))); do
     CUDA_VISIBLE_DEVICES=${GPULIST[$IDX]} python -m llava.eval.model_vqa \
         --model-path path_to_LLM_weights/table-llava-v1.5-7b/ \
-        --question-file ./MMTab_eval/MMTab-eval_test_data_49K.jsonl \
-        --image-folder ./MMTab_eval/all_test_image \
+        --question-file ./LLaVA-Inference/MMTab-eval_test_data_49K_llava_jsonl_format.jsonl \
+        --image-folder ./LLaVA-Inference/all_test_image \
         --answers-file ./eval_results/answers/$SPLIT/$CKPT/${CHUNKS}_${IDX}.jsonl \
         --num-chunks $CHUNKS \
         --chunk-idx $IDX \
