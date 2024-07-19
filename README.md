@@ -157,9 +157,9 @@ Inference on multi-GPU: [`start_multicard_inference.sh`](https://github.com/Spur
 ## TODOs
 - [x] Upload the MMTab dataset to Hugging Face.
 - [x] Upload the Table LLaVA 7B and 13B model weights to Hugging Face.
-- [x] Upload the code for model training.
-- [ ] Upload the code for model inference.
-- [ ] Upload the code for evaluation.
+- [x] The code for model training.
+- [x] The code for model inference.
+- [ ] The code for evaluation.
 
 ## Citation
 ```bibtex
