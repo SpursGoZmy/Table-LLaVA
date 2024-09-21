@@ -160,7 +160,8 @@ With the offical inference script, the inference result format in the `merge.jso
        'text': 'Find the numbers in the table.\n\nSaturday: ...', # model_output
        'answer_id': 'jELcxSPcXHBj3xvHfm5r8T', # answer_id
        'model_id': 'table-llava-7b', # model_id
-       'category': 'TABMWP_for_TQA'} # item category
+       'category': 'TABMWP_for_TQA'
+} # item category
 ```
 
 ## 6. Evaluation
