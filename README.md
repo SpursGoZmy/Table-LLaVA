@@ -170,9 +170,9 @@ The evaluation scripts are stored in the `MMTab-eval_evaluation` folder. First, 
 For the evaluation on the ToTTo test set, you need to organize the model output into a txt file and upload it to the offical [ToTTo leaderboard](https://github.com/google-research-datasets/ToTTo#leaderboard-submission). 
 
 ## 7. Limitations and Future Directions
-1. Multilingual and multi-table scenarios. The proposed MMTab dataset mainly focus on the single table in English. The multi-table scenario with broader language coverage should be considered.
-2. Table images in the wild. MMTab is based on tables from academic table datasets and it contains diverse high-quality table images rendered by automatic scripts. Nevertheless, table images in the wild can be low-quality. For instance, blurred, handwritten or incomplete table images. To further bridge the gap between the academic research and the real application scenarios, more diversified table images from the wild could be collected in the future, and their corresponding instruction following data needs to be constructed.
-3. Improve image resolution. The supported image resolution of LLaVA-1.5 is relatively low and may limit the upper bound of its capacity. Luckily, with the emergence of MLLMs which
+1. **Multilingual and multi-table scenarios.** The proposed MMTab dataset mainly focus on the single table in English. The multi-table scenario with broader language coverage should be considered.
+2. **Table images in the wild.** MMTab is based on tables from academic table datasets and it contains diverse high-quality table images rendered by automatic scripts. Nevertheless, table images in the wild can be low-quality. For instance, blurred, handwritten or incomplete table images. To further bridge the gap between the academic research and the real application scenarios, more diversified table images from the wild could be collected in the future, and their corresponding instruction following data needs to be constructed.
+3. **Improving image resolution.** The supported image resolution of LLaVA-1.5 is relatively low and may limit the upper bound of its capacity. Luckily, with the emergence of MLLMs which
 possess higher and dynamic image resolution (e.g., LLaVA-Next and Qwen-VL), more powerful tabular MLLMs can be developed with the collected data.
 
 ## TODOs
