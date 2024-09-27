@@ -181,6 +181,7 @@ possess higher and dynamic image resolution (e.g., LLaVA-Next and Qwen-VL), more
 - [x] The code for model training.
 - [x] The code for model inference.
 - [x] The code for evaluation.
+- [ ] Make the Table-LLaVA checkpoints compatible with the Transformers package, i.e., make it can be directly loaded in the way like `LlavaForConditionalGeneration.from_pretrained('SpursgoZmy/table-llava-v1.5-7b')`. This problem is mentioned in this [issue](https://github.com/SpursGoZmy/Table-LLaVA/issues/6)
 
 ## Citation
 ```bibtex
