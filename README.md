@@ -174,8 +174,8 @@ With the offical inference script, the inference result format in the `merge.jso
        'text': 'Find the numbers in the table.\n\nSaturday: ...', # model_output
        'answer_id': 'jELcxSPcXHBj3xvHfm5r8T', # answer_id
        'model_id': 'table-llava-7b', # model_id
-       'category': 'TABMWP_for_TQA'
-} # item category
+       'category': 'TABMWP_for_TQA' # item category
+} 
 ```
 
 ### 5.2 Inference with Table-LLaVA-HF checkpoints
@@ -264,7 +264,7 @@ possess higher and dynamic image resolution (e.g., LLaVA-Next and Qwen-VL), more
 - [x] The code for model training.
 - [x] The code for model inference.
 - [x] The code for evaluation.
-- [ ] Make the Table-LLaVA checkpoints compatible with the Transformers package, i.e., make it can be directly loaded in the way like `LlavaForConditionalGeneration.from_pretrained('SpursgoZmy/table-llava-v1.5-7b')`. This problem is mentioned in this [issue](https://github.com/SpursGoZmy/Table-LLaVA/issues/6)
+- [x] Make the Table-LLaVA checkpoints compatible with the Transformers package, i.e., make it can be directly loaded in the way like `LlavaForConditionalGeneration.from_pretrained('SpursgoZmy/table-llava-v1.5-7b')`. This problem is mentioned in this [issue](https://github.com/SpursGoZmy/Table-LLaVA/issues/6)
 
 ## Citation
 ```bibtex
